@@ -6,7 +6,7 @@
 ## Table of Contents
 - [Background](#background)
 - [Summary](#summary)
-- [Security Approach](#Security Approach)
+- [Security Approach](#SecurityApproach)
 - [Install](#install)
 - [Deployment](#deployment)
 - [Usage](#usage)
@@ -22,6 +22,7 @@ This is a job application demo code, showing some coding practices for web appli
 This application is using HTML, jQuery as front end UI, PHP 7 for REST API as backend.
 mySQL as database.
 
+<a name="SecurityApproach"></a>
 ## Security Approach
 For the Security Risk listed on owasp.org, the following is the approach:
 1. injection - in the database query, this app uses prepare statement, instead of just plain text.
@@ -37,6 +38,8 @@ and is to be returned to the user.
 
 5. Insufficient Logging & Monitoring - The database will log the user activities, if the 
 database is offline, the error will be in the standard PHP error log.
+
+6. If the log in fails, the UI will delay extra 3 seconds for the user has to wait some extra time to try again.
 
 ## Install
 Clone the repo into the server.
@@ -88,24 +91,3 @@ Private ©
 https://github.com/dermstore-com/code-challenge
 https://owasp.org/www-project-top-ten/
 ```
-
-
-
-## Information
-
-* Set aside around 2-3 hours to complete this challenge.
-* Fork this repo and build your project in your forked repo.
-* Target PHP 7.4, MySQL 8.0 and any framework. Or go framework-less.
-
-## Challenge
-
-* Create a customer login form that checks `username` and `password` inputs against values stored in a database.
-* Bare-bones UI is fine.
-* Bonus points for mitigating two (or more) of OWASP's [Top 10](https://owasp.org/www-project-top-ten/) vulnerabilities.
-* Log all attempts whether successful or not.
-* Include the CREATE TABLE statements in a separate file.
-
-## Tables
-
-* customers
-* login_activity
