@@ -2,7 +2,7 @@
 ![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)
 ![version](https://img.shields.io/badge/version-0.0.1-green.svg)
 > Example of some web application security
-
+![Screenshot](https://github.com/chenyinl/code-challenge/code-Challenge-Screen1.png)
 ## Table of Contents
 - [Background](#background)
 - [Summary](#summary)
@@ -58,8 +58,7 @@ Add database username and password in the Apache Server
 The src folder should be only accessable from index.php, not through web server.
 
 ## Usage
-There is only one row of user in the database. The username is user1 and the password is abcdef
-To add more user, a php code can be used:
+There is only one row of user in the database. The username is **user1** and the password is **abcdef**.
 ```
 > hash_hmac("sha256", PASSWORD, SALT);
 ```
