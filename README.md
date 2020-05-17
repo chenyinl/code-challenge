@@ -2,7 +2,7 @@
 ![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)
 ![version](https://img.shields.io/badge/version-0.0.1-green.svg)
 > Example of some web application security
-![Screenshot](https://github.com/chenyinl/code-challenge/code-Challenge-Screen1.png)
+![Screenshot](https://raw.githubusercontent.com/chenyinl/code-challenge/master/code-Challenge-Screen1.png)
 ## Table of Contents
 - [Background](#background)
 - [Summary](#summary)
