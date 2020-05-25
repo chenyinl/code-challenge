@@ -37,7 +37,7 @@ function displayResult(resultObj){
    if(resultObj.result=="success"){
        $("#messagebox").text(resultObj.public_message);
    }else{
-	   // if fails, Wait for 3 second to show the result
+       // if fails, Wait for 3 second to show the result
        setTimeout(function() { 
            $("#messagebox").text(resultObj.public_message) 
        }, 3000);
