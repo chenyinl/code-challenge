@@ -4,7 +4,7 @@ include('../src/Rest.php');
 final class RestTesting extends TestCase
 {
 	/* test the hash */
-	public function testMatchHashSuccess(): void
+	public function testMatchHashSuccess():     
 	{
 		$obj = new Rest();
 		$password = 'abcdef';
@@ -14,9 +14,9 @@ final class RestTesting extends TestCase
 		);
 		$this->assertTrue($obj->matchHash($password, $passwordObj));
 	}
-	
+
 	/* Test with wrong password */
-	public function testMatchHashFails(): void
+	public function testMatchHashFails():     
 	{
 		$obj = new Rest();
 		$password = '12345';

@@ -11,6 +11,7 @@
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Output](#output)
+- [Tests](#test)
 - [Contributing](#contributing)
 - [License](#license)
 - [Reference](#reference)
@@ -69,6 +70,12 @@ The UI will show if the log in is success or not.
 The API returns JSON for log in result.
 The table login_activity will save the access activities.
 
+## Test
+PHP Unit is include in the test folder. Use the following comment to test:
+```
+> ./phpunit-9.1.phar HttpTesting.php
+> ./phpunit-9.1.phar RestTesting.php
+```
 
 ## Files
 config - configuration / parameters file
