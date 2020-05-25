@@ -11,12 +11,13 @@ Class Activity
 	 * @param string $success  The login in result
 	 * @param string $notes    Comments for activities
 	 */
-    public function log(string $username, string $success, string $notes): void
+    public function log(string $username, string $success, string $notes, mysqli $conn): void
     {
 		$this->client_ip   = (!empty($_SERVER['HTTP_CLIENT_IP']))? $_SERVER['HTTP_CLIENT_IP']:"";
 		$this->proxy_ip    = (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))? $_SERVER['HTTP_X_FORWARDED_FOR']:"";
 		$this->remote_addr = (!empty($_SERVER['REMOTE_ADDR']))? $_SERVER['REMOTE_ADDR']: "";
 		$this->user_agent  = (!empty($_SERVER['HTTP_USER_AGENT']))? $_SERVER['HTTP_USER_AGENT']: "";
+		$this->conn        = $conn;
 		$this->success     = $success;
 		$this->notes       = $notes;
 		$this->username    = $username;
@@ -39,16 +40,16 @@ Class Activity
 	 */
 	public function saveToDB(): void
 	{
-		global $db_username, $db_password, $db_server, $db_name;
-        $conn = new mysqli($db_server, $db_username, $db_password, $db_name);
+		//global $db_username, $db_password, $db_server, $db_name;
+        //$conn = new mysqli($db_server, $db_username, $db_password, $db_name);
 
 		// Check connection
-		if ($conn->connect_error) {
+		if ($this->conn->connect_error) {
 		  error_log("Connection failed: " . $conn->connect_error);
 		} 
 		
         try{
-			$stmt = $conn -> prepare($this->sql);
+			$stmt = $this->conn -> prepare($this->sql);
 			$stmt -> bind_param(
 			    'sssssss', // 7 strings variables
 				$this->username,

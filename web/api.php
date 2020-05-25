@@ -26,15 +26,25 @@ if($method != 'POST'){
 $username = $_POST['uname'];
 $password = $_POST['psw'];
 
+// get database connection
+global $db_username, $db_password, $db_server, $db_name;
+$conn = new mysqli($db_server, $db_username, $db_password, $db_name);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+} 
+
 // Login: check the password
 $rest = new Rest();
-$result = $rest->login($username, $password);
+$result = $rest->login($username, $password, $conn);
 
 // Log the activities
 $activity = new Activity();
-$activity -> log($username, $result['result'], $result['internal_message']);
+$activity -> log($username, $result['result'], $result['internal_message'], $conn);
 
-// Response
+// close database connection
+$conn->close();
 // Remove internal message, only display public message
 unset ($result['internal_message']);
 header("Content-Type: application/json");

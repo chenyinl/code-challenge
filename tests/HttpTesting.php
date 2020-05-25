@@ -1,16 +1,31 @@
-<?php declare(strict_types=1);
-use PHPUnit\Framework\TestCase;
+<?php
+declare(strict_types=1); // only accept same type of value to a var
 
+use PHPUnit\Framework\TestCase;
+require_once ('../config/server.php');
+
+/**
+ * Test the API call
+ */
 final class HttpTesting extends TestCase
 {
-	/* test the hash */
-	public function testLoginSuccess():void
-	{
-		$ch = curl_init("http://localhost/code-challenge/web/api.php");
-		
+    /**
+     * Login API call - success
+     *
+     * @param string username
+     * @param string password
+     *
+     * @testWith ["user1", "abcdef"]
+     */
+    public function testLoginSuccess(string $username, string $password):void
+    {
+        global $server_name;
+        
+        $ch = curl_init("http://".$server_name."/api.php");
+        
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            "uname=user1&psw=abcdef");
+            "uname=".$username."&psw=".$password);
         // Receive server response ...
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -18,19 +33,27 @@ final class HttpTesting extends TestCase
         $returnObj = json_decode($server_output, true);
         
         curl_close ($ch);
-        
+
         $this->assertEquals($returnObj['result'], "success");
         $this->assertEquals($returnObj['public_message'], "Login Successed");
-	}
-	
-	/* test with wrong password */
-	public function testLoginFailed():void
-	{
-		$ch = curl_init("http://localhost/code-challenge/web/api.php");
-		
+    }
+
+    /**
+     * Login API call - fail
+     *
+     * @param string username
+     * @param string password
+     *
+     * @testWith ["user2", "aaaaa"]
+     */
+    public function testLoginFailed(string $username, string $password):void
+    {
+        global $server_name;
+        $ch = curl_init("http://".$server_name."/api.php");
+        
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            "uname=user2&psw=abcdef");
+            "uname=".$username."&psw=".$password);
         // Receive server response ...
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -41,5 +64,5 @@ final class HttpTesting extends TestCase
         
         $this->assertEquals($returnObj['result'], "failed");
         $this->assertEquals($returnObj['public_message'], "Login Failed");
-	}	
+    }    
 }

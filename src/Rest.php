@@ -10,9 +10,9 @@ class Rest
 	 * @param string $username The username given, to look up in the DB
 	 * @param string $password The password to process the hash
 	 */
-    public function login (string $username, string $password): array
+    public function login (string $username, string $password, mysqli $conn): array
     {
-        $passwordObj = $this->lookupDB($username);
+        $passwordObj = $this->lookupDB($username, $conn);
         if(empty($passwordObj)){
             $a = array(
                 "result" => "failed",
@@ -46,16 +46,8 @@ class Rest
      *
      * @param string $username Look up the DB by user name
      */
-    private function lookupDB(string $username): array
+    private function lookupDB(string $username, mysqli $conn): array
     {
-        global $db_username, $db_password, $db_server, $db_name;
-        $conn = new mysqli($db_server, $db_username, $db_password, $db_name);
-
-        // Check connection
-        if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-        } 
-        
         /* Set it to read only */
         $conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
         
