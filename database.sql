@@ -56,6 +56,7 @@ CREATE TABLE `login_activity` (
   `remote_addr` varchar(100) DEFAULT NULL,
   `notes` varchar(100) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `user_agent` text
+  `user_agent` text,
+  PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
