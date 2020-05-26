@@ -49,7 +49,7 @@ class Rest
     private function lookupDB(string $username, mysqli $conn): array
     {
         /* Set it to read only */
-        $conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+        //$conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
         
         /* use prepare statment to prevent SQL injection */
         $sql = "SELECT password_hash, password_salt 
@@ -61,6 +61,7 @@ class Rest
 
         $res = $stmt->get_result();
         $row = $res->fetch_assoc();
+        $stmt ->close();
         if(!$row) return array();
         return $row;
     }

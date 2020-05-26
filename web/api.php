@@ -32,7 +32,8 @@ $conn = new mysqli($db_server, $db_username, $db_password, $db_name);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  error_log("Connection failed: " . $conn->connect_error);
+  exit();
 } 
 
 // Login: check the password
@@ -45,6 +46,7 @@ $activity -> log($username, $result['result'], $result['internal_message'], $con
 
 // close database connection
 $conn->close();
+
 // Remove internal message, only display public message
 unset ($result['internal_message']);
 header("Content-Type: application/json");

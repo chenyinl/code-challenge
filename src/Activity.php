@@ -23,6 +23,7 @@ Class Activity
         $this->username    = $username;
         $this->composeSQL();
         $this->saveToDB();
+        //var_dump($this->conn);
     }
 
     /**
@@ -42,6 +43,9 @@ Class Activity
     {
         try{
             $stmt = $this->conn -> prepare($this->sql);
+            if(!$stmt){
+				throw new Exception('Cannot prepare activities statement.');
+			}
             $stmt -> bind_param(
                 'sssssss', // 7 strings variables
                 $this->username,
@@ -52,7 +56,15 @@ Class Activity
                 $this->success,
                 $this->notes
             );
-            $stmt->execute();
+            $exe_result = $stmt->execute();//var_dump($stmt->error);
+            if(!$exe_result){
+				throw new Exception('Cannot prepare activities statement.'.
+				$stmt->error
+				);
+			}else{
+				//var_dump($stmt->insert_id);
+			}
+			$stmt->close();
         } catch (Throwable $t){
             error_log($t->getMessage());
         }
