@@ -4,17 +4,17 @@
  */
 class Rest
 {
-	/**
-	 * Check if the http method is allowed
-	 */
+    /**
+     * Check if the http method is allowed
+     */
     public function checkMethod (): void
     {
         $method = $_SERVER['REQUEST_METHOD'];
 
         // Not allowing OPTIONS since not allowing CROS
         if ($method == 'OPTIONS') {
-	        //header("Access-Control-Allow-Methods: POST, OPTIONS");         
-	        exit(0);
+            //header("Access-Control-Allow-Methods: POST, OPTIONS");         
+            exit(0);
         }
 
         // Only allow POST
