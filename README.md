@@ -74,7 +74,7 @@ The table login_activity will save the access activities.
 PHP Unit is include in the test folder. Use the following comment to test:
 ```
 > ./phpunit-9.1.phar HttpTesting.php
-> ./phpunit-9.1.phar RestTesting.php
+> ./phpunit-9.1.phar AuthTesting.php
 ```
 
 ## Files

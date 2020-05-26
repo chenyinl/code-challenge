@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
-include('../src/Rest.php');
-final class RestTesting extends TestCase
+include('../src/Auth.php');
+final class AuthTesting extends TestCase
 {
     /* test the hash */
-    public function testMatchHashSuccess():     
+    public function testMatchHashSuccess(): void
     {
-        $obj = new Rest();
+        $obj = new Auth();
         $password = 'abcdef';
         $passwordObj = array(
             'password_hash'=>'eb5a595d84c2d23a92a156590df88002344d6066cd982835c92b0672e45e8646',
@@ -16,9 +16,9 @@ final class RestTesting extends TestCase
     }
 
     /* Test with wrong password */
-    public function testMatchHashFails():     
+    public function testMatchHashFails(): void
     {
-        $obj = new Rest();
+        $obj = new Auth();
         $password = '12345';
         $passwordObj = array(
             'password_hash'=>'eb5a595d84c2d23a92a156590df88002344d6066cd982835c92b0672e45e8646',

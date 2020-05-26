@@ -5,65 +5,42 @@
 class Rest
 {
 	/**
-	 * Check if the password hash matches
-	 *
-	 * @param string $username The username given, to look up in the DB
-	 * @param string $password The password to process the hash
+	 * Check if the http method is allowed
 	 */
-    public function login (string $username, string $password, mysqli $conn): array
+    public function checkMethod (): void
     {
-        $passwordObj = $this->lookupDB($username, $conn);
-        if(empty($passwordObj)){
-            $a = array(
-                "result" => "failed",
-                "internal_message" => "user not found",
-                "public_message"   => "Login Failed"
-            );
-            return $a;
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        // Not allowing OPTIONS since not allowing CROS
+        if ($method == 'OPTIONS') {
+	        //header("Access-Control-Allow-Methods: POST, OPTIONS");         
+	        exit(0);
         }
-        if($this->matchHash($password, $passwordObj)){
-            $a = array(
-                "result" => "success",
-                "internal_message" => "password matched",
-                "public_message"   => "Login Successed"
-            );
-            return $a;
-            
-        }else{
-            $a = array(
-                "result" => "failed",
-                "internal_message" => "hash does not matched",
-                "public_message"   => "Login Failed"
-            );
-            return $a;
+
+        // Only allow POST
+        if($method != 'POST'){
+            exit(0);
         }
     }
 
     /**
-     * Look up the salt and hash from the DB
+     * Connect to the database
      *
      * Use Prepare statment to prevent SQL injection
      *
      * @param string $username Look up the DB by user name
      */
-    private function lookupDB(string $username, mysqli $conn): array
+    public function getDBConnection(): mysqli
     {
-        /* Set it to read only */
-        //$conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
-        
-        /* use prepare statment to prevent SQL injection */
-        $sql = "SELECT password_hash, password_salt 
-                FROM customers 
-                WHERE username=?";
-        $stmt = $conn ->prepare($sql);
-        $stmt -> bind_param('s', $username);
-        $stmt -> execute();
+        // get database connection
+        global $db_username, $db_password, $db_server, $db_name;
+        $conn = new mysqli($db_server, $db_username, $db_password, $db_name);
 
-        $res = $stmt->get_result();
-        $row = $res->fetch_assoc();
-        $stmt ->close();
-        if(!$row) return array();
-        return $row;
+        // Check connection
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: ".$conn->connect_error);
+        }
+        return $conn;
     }
 
     /**
@@ -72,13 +49,13 @@ class Rest
      * @param string $password The password given by the user
      * @param array $passwordObject The data from database
      */
-    public function matchHash(string $password, array $passwordObject): bool
+    public function returnJSON(array $result ): void
     {
-        $hash = hash_hmac("sha256", $password, $passwordObject['password_salt']);
-        if($hash == $passwordObject['password_hash']){
-            return true;
-        }else{
-            return false;
-        }
+        // Remove internal message, only display public message
+        unset ($result['internal_message']);
+        
+        header("Content-Type: application/json");
+        echo json_encode($result);
+        exit();
     }
 }
