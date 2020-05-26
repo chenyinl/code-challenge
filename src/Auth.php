@@ -4,12 +4,12 @@
  */
 class Auth
 {
-	/**
-	 * Check if the password hash matches
-	 *
-	 * @param string $username The username given, to look up in the DB
-	 * @param string $password The password to process the hash
-	 */
+    /**
+     * Check if the password hash matches
+     *
+     * @param string $username The username given, to look up in the DB
+     * @param string $password The password to process the hash
+     */
     public function login (string $username, string $password, mysqli $conn): array
     {
         $passwordObj = $this->lookupDB($username, $conn);
@@ -45,6 +45,7 @@ class Auth
      * Use Prepare statment to prevent SQL injection
      *
      * @param string $username Look up the DB by user name
+     * @param mysqli $conn     the db connection obj
      */
     private function lookupDB(string $username, mysqli $conn): array
     {
