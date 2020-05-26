@@ -13,10 +13,17 @@ Class Activity
      */
     public function log(string $username, string $success, string $notes, mysqli $conn): void
     {
-        $this->client_ip   = (!empty($_SERVER['HTTP_CLIENT_IP']))? $_SERVER['HTTP_CLIENT_IP']:"";
-        $this->proxy_ip    = (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))? $_SERVER['HTTP_X_FORWARDED_FOR']:"";
-        $this->remote_addr = (!empty($_SERVER['REMOTE_ADDR']))? $_SERVER['REMOTE_ADDR']: "";
-        $this->user_agent  = (!empty($_SERVER['HTTP_USER_AGENT']))? $_SERVER['HTTP_USER_AGENT']: "";
+        //$this->client_ip   = (!empty($_SERVER['HTTP_CLIENT_IP']))? $_SERVER['HTTP_CLIENT_IP']:"";
+        //$this->proxy_ip    = (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))? $_SERVER['HTTP_X_FORWARDED_FOR']:"";
+        //$this->remote_addr = (!empty($_SERVER['REMOTE_ADDR']))? $_SERVER['REMOTE_ADDR']: "";
+        //$this->user_agent  = (!empty($_SERVER['HTTP_USER_AGENT']))? $_SERVER['HTTP_USER_AGENT']: "";
+        
+        /* PHP7.4 shorthand Null coalescing */
+        $this->client_ip   = $_SERVER['HTTP_CLIENT_IP']       ?? "";
+        $this->proxy_ip    = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? "";
+        $this->remote_addr = $_SERVER['REMOTE_ADDR']          ?? "";
+        $this->user_agent  = $_SERVER['HTTP_USER_AGENT']      ?? "";
+
         $this->conn        = $conn;
         $this->success     = $success;
         $this->notes       = $notes;
