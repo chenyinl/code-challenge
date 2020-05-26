@@ -58,6 +58,17 @@ Add database username and password in the Apache Server
 ```
 The src folder should be only accessable from index.php, not through web server.
 
+To use the Apache config file in this repository, simple create a symbolic link from sites-enabled directory to the file:
+```
+>sites-enabled> ln -v DOCROOT/apache.conf login_demo.conf
+```
+
+To change the domain name, we need to update the name in the two files below:
+```
+apache.conf
+config/server.php
+```
+
 ## Usage
 There is only one row of user in the database. The username is **user1** and the password is **abcdef**.
 ```
